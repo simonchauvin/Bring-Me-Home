@@ -1,4 +1,10 @@
 #################
+## Komodo Edit
+#################
+.komodotools
+*.komodoproject
+
+#################
 ## Eclipse
 #################
 
