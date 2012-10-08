@@ -1,15 +1,20 @@
 var start = function () {
     "use strict";
     //Sprites
-    fmAssetManager.addAsset("ball", fmParameters.IMAGE, "assets/ball.png");
-    fmAssetManager.addAsset("paddle", fmParameters.IMAGE, "assets/paddle.png");
+    FMAssetManager.addAsset("ball", FMParameters.IMAGE, "assets/ball.png");
+    FMAssetManager.addAsset("paddle", FMParameters.IMAGE, "assets/paddle.png");
 
     //Sounds
-    fmAssetManager.addAsset("sndBall", fmParameters.AUDIO, "assets/ball.wav");
+    FMAssetManager.addAsset("sndBall", FMParameters.AUDIO, "assets/ball.wav");
 
-    fmParameters.libraryDirectory = "libs";
+    //Tiled Map Editor Levels
+    FMAssetManager.addAsset("wldTest", FMParameters.FILE, "world/test.tmx");
+    //Tile set
+    FMAssetManager.addAsset("ground", FMParameters.IMAGE, "assets/ground.png");
 
-    var game = fmGame("Bring Me Home", 1024, 768, menuState);
+    FMParameters.libraryDirectory = "lib";
+
+    var game = FMGame("Bring Me Home", 1024, 768, menuState);
     game.run();
 };
 

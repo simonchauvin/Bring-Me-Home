@@ -1,26 +1,27 @@
-function paddle(x, y) {
+function paddle(x, y, world) {
 	"use strict";
-	var that = fmGameObject(10);
+	var that = Object.create(FMGameObject(99));
 
-	var spatialComponent = fmSpatialComponent(that, x, y)
-	var rendererComponent = fmSpriteRendererComponent(that);
-	rendererComponent.init(fmAssetManager.getAssetByName("paddle"));
+	var spatialComponent = FMSpatialComponent(x, y, that);
+	var rendererComponent = FMSpriteRendererComponent(FMAssetManager.getAssetByName("paddle"), 300, 30, that);
 
-	var colliderComponent = fmAabbComponent(that, x, y, 300, 30);
-	colliderComponent.init()
-
-	var physicComponent = fmPhysicComponent(that);
-	physicComponent.acceleration = 10;
-	physicComponent.maxXVelocity = 20;
-	physicComponent.maxYVelocity = 20;
-
-	fmScriptComponent(that);
+	var physic = FMB2BoxComponent(300, 30, world, that);
+	physic.init(FMParameters.DYNAMIC, 0, 1, 0);
 
 	/**
-	 * Update the paddle
+	 * Update the paddle.
 	 */
-	that.update = function (game) {
-		
+	that.update = function (game, dt) {
+		Object.getPrototypeOf(that).update(game, dt);
+		if (game.isKeyPressed(FMKeyboard.left)) {
+			physic.applyImpulse(FMVector(-50, 0), FMVector(x, y));
+		}
+		if (game.isKeyPressed(FMKeyboard.right)) {
+			physic.applyImpulse(FMVector(50, 0), FMVector(x, y));
+		}
+		if (!game.isKeyPressed(FMKeyboard.left) && !game.isKeyPressed(FMKeyboard.right)) {
+			physic.applyImpulse(FMVector(0, 0), FMVector(x, y));
+		}
 	};
 
 	return that;

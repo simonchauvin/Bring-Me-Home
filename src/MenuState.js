@@ -4,30 +4,26 @@
  */
 function menuState() {
 	"use strict";
-	var that = Object.create(fmState());
+	var that = Object.create(FMState());
 
 	/**
 	 * Initialize the menu
 	 */
-	that.init = function () {
-		Object.getPrototypeOf(that).init();
+	that.init = function (game) {
+		Object.getPrototypeOf(that).init(game);
 
                 //Debug mode
-                fmParameters.debug = true;
+                FMParameters.debug = true;
 
-		//Setting the bounds of the world
-		fmParameters.worldWidth = 1024;
-		fmParameters.worldHeight = 768;
-
-		var title = fmGameObject(99);
-		var sp = fmSpatialComponent(title, fmParameters.screenWidth / 2 - 100, fmParameters.screenHeight / 2 - 150);
-		var text = fmTextRendererComponent(title, "Bring Me Home");
+		var title = FMGameObject(99);
+		var sp = FMSpatialComponent(game.getScreenWidth() / 2 - 100, game.getScreenHeight() / 2 - 150, title);
+		var text = FMTextRendererComponent("Bring Me Home", title);
 		text.setFormat('#fff', '30px sans-serif', 'middle');
 		that.add(title);
 
-		var startButton = fmGameObject(99);
-		var sp = fmSpatialComponent(startButton, fmParameters.screenWidth / 2 - 130, fmParameters.screenHeight / 2 + 150);
-		var text = fmTextRendererComponent(startButton, "Press SPACE to play");
+		var startButton = FMGameObject(99);
+		var sp = FMSpatialComponent(game.getScreenWidth() / 2 - 130, game.getScreenHeight() / 2 + 150, startButton);
+		var text = FMTextRendererComponent("Press SPACE to play", startButton);
 		text.setFormat('#fff', '30px sans-serif', 'middle');
 		that.add(startButton);
 	};
@@ -35,13 +31,12 @@ function menuState() {
 	/**
 	 * Update of the menu state
 	 */
-	that.update = function (game) {
-		Object.getPrototypeOf(that).update(game);
+	that.update = function (game, dt) {
+		Object.getPrototypeOf(that).update(game, dt);
 
-		if (game.isKeyPressed(fmKeyboard.space)) {
+		if (game.isKeyPressed(FMKeyboard.space)) {
 			game.switchState(new playState());
 		}
-
 	};
 
 	return that;
