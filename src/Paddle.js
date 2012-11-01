@@ -6,13 +6,13 @@ function paddle(x, y, world) {
 	that.renderer = FMSpriteRendererComponent(FMAssetManager.getAssetByName("paddle"), 200, 20, that);
 
 	that.physic = FMB2BoxComponent(200, 20, world, that);
-	that.physic.init(FMParameters.KINEMATIC, 1, 0, 0);
+	that.physic.init(FMParameters.KINEMATIC, 0.8, 0.8, 0.8);
 
 	/**
 	 * Update the paddle.
 	 */
-	that.update = function (game, dt) {
-		Object.getPrototypeOf(that).update(game, dt);
+	that.update = function (dt) {
+		Object.getPrototypeOf(that).update(dt);
 	};
 
 	return that;

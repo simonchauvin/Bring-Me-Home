@@ -35,7 +35,7 @@ function menuState() {
 		Object.getPrototypeOf(that).update(game, dt);
 
 		if (game.isKeyPressed(FMKeyboard.SPACE)) {
-			game.switchState(new playState());
+			game.switchState(playState());
 		}
 	};
 

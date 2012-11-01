@@ -9,7 +9,7 @@ function playState() {
     bal = null,
     player1 = null,
     player2 = null,
-    ballVelocity = 1,
+    theWall = null,
     metersCovered = 0,
     metersCoveredLabel = null;
 
@@ -44,12 +44,19 @@ function playState() {
         bal = ball(250, 300, that.world);
         that.add(bal);
 
+        theWall = TheWall(that.world);
+        that.add(theWall);
+
 	//GUI
 	metersCoveredLabel = FMGameObject(99);
+	metersCoveredLabel.scrollFactor = FMVector(0, 0);
 	FMSpatialComponent(750, 20, metersCoveredLabel);
 	var text = FMTextRendererComponent(metersCovered + "m", metersCoveredLabel);
 	text.setFormat('#fff', '18px sans-serif', 'middle');
 	that.add(metersCoveredLabel);
+
+	//Make the camera follow the ball
+	that.follow(bal, 160, 160, false);
     };
 
     /**
@@ -63,14 +70,24 @@ function playState() {
 	    that.add(bal);
         }
 
+	//Update the wall position according to the camera position
+	theWall.spatial.x = that.camera.x;
+
+	//Prevent camera from going left
+	if (bal.physic.getLinearVelocity().x < 0) {
+	    that.unFollow();
+	} else if (!that.getScroller()) {
+	    that.follow(bal, 160, 160);
+	}
+
 	//Player 1 controls
 	if (game.isKeyPressed(FMKeyboard.LEFT)) {
 		//player1.physic.applyImpulse(FMVector(-50, 0), FMVector(player1.spatial.x, player1.spatial.y));
-		player1.physic.setLinearVelocity(FMVector(-400, 0));
+		player1.physic.setLinearVelocity(FMVector(-1000, 0));
 	}
 	if (game.isKeyPressed(FMKeyboard.RIGHT)) {
 		//player1.physic.applyImpulse(FMVector(50, 0), FMVector(player1.spatial.x, player1.spatial.y));
-		player1.physic.setLinearVelocity(FMVector(400, 0));
+		player1.physic.setLinearVelocity(FMVector(1000, 0));
 	}
 	if (!game.isKeyPressed(FMKeyboard.LEFT) && !game.isKeyPressed(FMKeyboard.RIGHT)) {
 		//player1.physic.applyImpulse(FMVector(0, 0), FMVector(player1.spatial.x, player1.spatial.y));
@@ -80,26 +97,30 @@ function playState() {
 	//Player 2 controls
 	if (game.isKeyPressed(FMKeyboard.Q)) {
 		//player2.physic.applyImpulse(FMVector(-50, 0), FMVector(player2.spatial.x, player2.spatial.y));
-		player2.physic.setLinearVelocity(FMVector(-400, 0));
+		player2.physic.setLinearVelocity(FMVector(-1000, 0));
 	}
 	if (game.isKeyPressed(FMKeyboard.D)) {
 		//player2.physic.applyImpulse(FMVector(50, 0), FMVector(player2.spatial.x, player2.spatial.y));
-		player2.physic.setLinearVelocity(FMVector(400, 0));
+		player2.physic.setLinearVelocity(FMVector(1000, 0));
 	}
 	if (!game.isKeyPressed(FMKeyboard.Q) && !game.isKeyPressed(FMKeyboard.D)) {
 		//player2.physic.applyImpulse(FMVector(0, 0), FMVector(player2.spatial.x, player2.spatial.y));
 		player2.physic.setLinearVelocity(FMVector(0, 0));
 	}
 
-	//Make the camera follow the ball
-	that.follow(bal, 320, 240);
-
-	//Increase the camera velocity
-	ballVelocity += 0.00001;
-	
 	//Increase meters covered
 	metersCovered = that.camera.x / FMParameters.PIXELS_TO_METERS;
 	metersCoveredLabel.components[FMComponentTypes.RENDERER].text = Math.floor(metersCovered) + "m";
+
+	if (bal.spatial.x > that.camera.width
+	    || bal.spatial.x + bal.renderer.getWidth() < that.camera.x
+	    || bal.spatial.y + bal.renderer.getHeight() < that.camera.y
+	    || bal.spatial.y > that.camera.height) {
+	    //TODO show game over and stop everything
+	    if (game.isKeyPressed(FMKeyboard.SPACE)) {
+		game.switchState(playState());
+	    }
+	}
     };
 
     /**

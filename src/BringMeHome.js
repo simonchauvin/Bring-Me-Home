@@ -3,6 +3,7 @@ var start = function () {
     //Sprites
     FMAssetManager.addAsset("ball", FMParameters.IMAGE, "assets/ball.png");
     FMAssetManager.addAsset("paddle", FMParameters.IMAGE, "assets/paddle.png");
+    FMAssetManager.addAsset("theWall", FMParameters.IMAGE, "assets/the_wall.png");
 
     //Sounds
     FMAssetManager.addAsset("sndBall", FMParameters.AUDIO, "assets/ball.wav");
