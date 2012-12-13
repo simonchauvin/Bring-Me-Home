@@ -15,7 +15,7 @@ var start = function () {
 
     FMParameters.libraryDirectory = "lib";
 
-    var game = FMGame("Bring Me Home", 800, 600, menuState);
+    var game = FMGame("canvas1", "Bring Me Home", 800, 600, menuState);
     game.run();
 };
 

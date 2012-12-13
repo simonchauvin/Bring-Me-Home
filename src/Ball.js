@@ -1,7 +1,7 @@
 function ball(x, y, world) {
 	var that = Object.create(FMGameObject(99));
 
-        that.velocity = FMVector(100, 80);
+        that.velocity = FMPoint(100, 80);
 
 	that.spatial = FMSpatialComponent(x, y, that);
 	that.renderer = FMSpriteRendererComponent(FMAssetManager.getAssetByName("ball"), 40, 40, that);

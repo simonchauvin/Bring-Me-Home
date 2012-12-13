@@ -29,7 +29,7 @@ function playState() {
         that.world.width = 2048
         that.world.height = 600;
 
-	that.world.initBox2DWorld(FMVector(0, 0), true);
+	that.world.initBox2DWorld(FMPoint(0, 0), true);
 
 	var tileMap = that.importTileMapFromTmx(FMAssetManager.getAssetByName("wldTest"), "decor", "ground");
 
@@ -49,7 +49,7 @@ function playState() {
 
 	//GUI
 	metersCoveredLabel = FMGameObject(99);
-	metersCoveredLabel.scrollFactor = FMVector(0, 0);
+	metersCoveredLabel.scrollFactor = FMPoint(0, 0);
 	FMSpatialComponent(750, 20, metersCoveredLabel);
 	var text = FMTextRendererComponent(metersCovered + "m", metersCoveredLabel);
 	text.setFormat('#fff', '18px sans-serif', 'middle');
@@ -83,29 +83,29 @@ function playState() {
 	//Player 1 controls
 	if (game.isKeyPressed(FMKeyboard.LEFT)) {
 		//player1.physic.applyImpulse(FMVector(-50, 0), FMVector(player1.spatial.x, player1.spatial.y));
-		player1.physic.setLinearVelocity(FMVector(-1000, 0));
+		player1.physic.setLinearVelocity(FMPoint(-1000, 0));
 	}
 	if (game.isKeyPressed(FMKeyboard.RIGHT)) {
 		//player1.physic.applyImpulse(FMVector(50, 0), FMVector(player1.spatial.x, player1.spatial.y));
-		player1.physic.setLinearVelocity(FMVector(1000, 0));
+		player1.physic.setLinearVelocity(FMPoint(1000, 0));
 	}
 	if (!game.isKeyPressed(FMKeyboard.LEFT) && !game.isKeyPressed(FMKeyboard.RIGHT)) {
 		//player1.physic.applyImpulse(FMVector(0, 0), FMVector(player1.spatial.x, player1.spatial.y));
-		player1.physic.setLinearVelocity(FMVector(0, 0));
+		player1.physic.setLinearVelocity(FMPoint(0, 0));
 	}
 
 	//Player 2 controls
 	if (game.isKeyPressed(FMKeyboard.Q)) {
 		//player2.physic.applyImpulse(FMVector(-50, 0), FMVector(player2.spatial.x, player2.spatial.y));
-		player2.physic.setLinearVelocity(FMVector(-1000, 0));
+		player2.physic.setLinearVelocity(FMPoint(-1000, 0));
 	}
 	if (game.isKeyPressed(FMKeyboard.D)) {
 		//player2.physic.applyImpulse(FMVector(50, 0), FMVector(player2.spatial.x, player2.spatial.y));
-		player2.physic.setLinearVelocity(FMVector(1000, 0));
+		player2.physic.setLinearVelocity(FMPoint(1000, 0));
 	}
 	if (!game.isKeyPressed(FMKeyboard.Q) && !game.isKeyPressed(FMKeyboard.D)) {
 		//player2.physic.applyImpulse(FMVector(0, 0), FMVector(player2.spatial.x, player2.spatial.y));
-		player2.physic.setLinearVelocity(FMVector(0, 0));
+		player2.physic.setLinearVelocity(FMPoint(0, 0));
 	}
 
 	//Increase meters covered
